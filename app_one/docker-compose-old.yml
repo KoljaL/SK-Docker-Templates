@@ -1,0 +1,71 @@
+version: "3.8"
+services:
+
+
+
+  # frontend:
+  #   build: ./SvelteKit
+  #   depends_on:
+  #     - backend
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - network-backend
+
+
+
+
+
+  backend:
+    # https://docs.directus.io/self-hosted/docker-guide.html
+    container_name: Directus
+    image: directus/directus:9.23.1
+    volumes:
+      - ./Directus/uploads:/directus/uploads
+      - ./Directus/extensions:/directus/extensions
+    # build: ./Directus
+    depends_on:
+      - database
+    ports:
+      - "3001:3001"
+    networks: 
+     - network-backend
+  
+    environment:
+      KEY: ${KEY}
+      SECRET: ${SECRET}
+      DB_CLIENT: ${DB_CLIENT}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+
+
+
+  database:
+    container_name: Database
+    image: postgis/postgis:13-master
+    # Required when running on platform other than amd64, like Apple M1/M2:
+    platform: linux/amd64
+    volumes:
+      - ./Database/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+
+    restart: always
+    # uncomment following lines to access db locally
+    ports:
+      - 27017:27017
+    networks: 
+     - network-backend
+
+networks:
+  network-backend:
+
+volumes: 
+  mongodb_data:

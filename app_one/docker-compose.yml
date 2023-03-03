@@ -1,31 +1,32 @@
 version: '3'
 services:
 
-
+  ## DATABASE
   database:
-    container_name: cix-database
+    container_name: ${APP_NAME}-database
     image: postgis/postgis:13-master
+    platform: linux/amd64 # Required when running on platform other than amd64, like Apple M1/M2:
+    restart: always
     volumes:
-      - ./data/database:/var/lib/postgresql/data
+      - ./Database/data:/var/lib/postgresql/data
     networks:
-      - directus
+      - aa-network
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
 
-
-  directus:
-    # https://docs.directus.io/self-hosted/docker-guide.html
-    container_name: cix-directus
+  ## BACKEND
+  backend:
+    container_name: ${APP_NAME}-directus
     image: directus/directus:latest
     ports:
       - 8055:8055
     volumes:
-      - ./uploads:/directus/uploads
-      - ./extensions:/directus/extensions
+      - ./Directus/uploads:/directus/uploads
+      - ./Directus/extensions:/directus/extensions
     networks:
-      - directus
+      - aa-network
     depends_on:
       - database
     environment:
@@ -40,7 +41,17 @@ services:
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
+  ## FRONTEND
+  # frontend:
+  #   container_name: ${APP_NAME}-frontend
+  #   build: ./SvelteKit
+  #   depends_on:
+  #     - backend
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - network-backend
 
+## NETWORKS
 networks:
-  directus:
-    name: "directus"
+  aa-network:
