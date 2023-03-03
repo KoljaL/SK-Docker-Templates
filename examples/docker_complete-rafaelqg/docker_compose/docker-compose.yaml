@@ -1,0 +1,9 @@
+services:
+  backend:
+    build: node_backend/.
+    ports:
+    - "8081:8081"
+  frontend:
+    build: web_frontend/.
+    ports:
+    - "9091:80"
