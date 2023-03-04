@@ -1,12 +1,7 @@
-<script lang="ts">
-	import type { PageData } from './$types';
-
-	export let data: PageData;
-
-	$: console.log(data.data.data[0].Title);
+<script>
+	import Counter from './Counter.svelte';
 	import welcome from '$lib/images/svelte-welcome.webp';
 	import welcome_fallback from '$lib/images/svelte-welcome.png';
-	// get server dat
 </script>
 
 <svelte:head>
@@ -22,14 +17,15 @@
 				<img src={welcome_fallback} alt="Welcome" />
 			</picture>
 		</span>
+
+		to your new<br />SvelteKit app
 	</h1>
 
-	{#await data}
-		<p>loading...</p>
-	{:then data}
-		<p>Title: {data.data.data[0].Title}</p>
-		<img src="http://localhost:8055/assets/{data.data.data[0].Image}" alt="" />
-	{/await}
+	<h2>
+		try editing <strong>src/routes/+page.svelte</strong>
+	</h2>
+
+	<Counter />
 </section>
 
 <style>

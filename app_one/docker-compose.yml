@@ -42,15 +42,21 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
   ## FRONTEND
-  # frontend:
-  #   container_name: ${APP_NAME}-frontend
-  #   build: ./SvelteKit
-  #   depends_on:
-  #     - backend
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #     - network-backend
+  frontend:
+    container_name: ${APP_NAME}-frontend
+    restart: always
+    ports:
+      - 5050:5050
+    environment:
+      PORT: 5050
+      ORIGIN: "http://localhost:5050"
+    build: ./SvelteKit
+    depends_on:
+      - backend
+    # ports:
+    #   - "3000:3000"
+    networks:
+      - aa-network
 
 ## NETWORKS
 networks:
