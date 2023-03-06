@@ -1,0 +1,5 @@
+FROM node:18-alpine
+WORKDIR /app
+COPY app .
+RUN rm -rf src/ static/
+CMD ["node", "--trace-sigint", "build"]

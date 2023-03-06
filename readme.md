@@ -14,7 +14,7 @@ brew cask install docker
 ### Needfull Links
 - [dockerizing-our-front-and-backend](https://milanwittpohl.com/de/projects/tutorials/Full-Stack-Web-App/dockerizing-our-front-and-backend)
 - [docker-container-volumes](https://www.ionos.de/digitalguide/server/knowhow/docker-container-volumes/)
-
+- [best-practices-around-production-ready](https://nickjanetakis.com/blog/best-practices-around-production-ready-web-apps-with-docker-compose)
 
 
 ## Docker Glossary 

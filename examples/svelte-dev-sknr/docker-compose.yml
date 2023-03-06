@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: svelte-dev
+    image: svelte-dev:latest
+    build:
+      dockerfile: docker/Dockerfile-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app

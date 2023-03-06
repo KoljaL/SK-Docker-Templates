@@ -1,7 +1,11 @@
 version: '3'
 services:
 
-  ## DATABASE
+# https://blog.alexanderwolf.tech/how-to-dockerize-your-sveltekit-app/
+
+  #######################################
+  # DATABASE
+  #######################################
   database:
     container_name: ${APP_NAME}-database
     image: postgis/postgis:13-master
@@ -16,7 +20,10 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
 
-  ## BACKEND
+
+  #######################################
+  # BACKEND
+  #######################################
   backend:
     container_name: ${APP_NAME}-directus
     image: directus/directus:latest
@@ -41,7 +48,10 @@ services:
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
-  ## FRONTEND
+
+  #######################################
+  # FRONTEND
+  #######################################
   frontend:
     container_name: ${APP_NAME}-frontend
     restart: always
@@ -58,6 +68,9 @@ services:
     networks:
       - aa-network
 
-## NETWORKS
+
+#######################################
+# NETWORKS
+#######################################
 networks:
   aa-network:
